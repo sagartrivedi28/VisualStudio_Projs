@@ -66,6 +66,46 @@ vector<vector<string>> wordCountEngine(const string& document)
 
 
 }
+
+vector<vector<char>> findCubes(const string str, vector<vector<char>> cubes){
+    
+    unordered_map<char, unordered_set<int>> cMap;
+    for(int i=0; i<cubes.size(); ++i){
+        for(int j=0; j<cubes[0].size(); ++j){
+            if(cMap.count(cubes[i][j])) cMap[cubes[i][j]].insert(i);
+            else cMap.insert(pair<char,unordered_set<int>>(cubes[i][j], {i}));
+        }
+    }
+    
+    list<unordered_map<int,int>> listCubes;
+    vector<vector<cahr>> outVect; outVect.clear();
+    if(cMap.count(str[0])) {
+        for(auto it: cMap[str[0]]){
+            listCubes.push_back({make_pair(it, 0)});
+        }
+        
+    }else return outVect;
+    
+    
+    for(int i=1; i<str.size(); ++i){
+        if(listCubes.empty()) return outVect;
+        int list_sz = listCubes.size();
+        for(int j = 0; j<list_sz; ++j){
+            for(auto it: cMap[str[i]]){
+                unordered_map<int,int> temp = listCubes.pop_front();
+                if(temp.count(it)) continue;
+                else{
+                    temp.insert(it,i);
+                    listCubes.push_back(temp);
+                }
+            }
+        }
+    }
+    
+    
+}
+
+
 int main() {
 
 	string inStr;
